@@ -11,6 +11,7 @@ import ProductsPage from "./pages/ProductsPage.jsx";
 import BusinessPlanPage from "./pages/BusinessPlanPage.jsx";
 import FranchisePage from "./pages/FranchisePage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
+import CategoryDetailPage from "./pages/CategoryDetailPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 export default function App() {
@@ -27,6 +28,8 @@ export default function App() {
             <Route path="/money-skills" element={<MoneySkillsPage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/products" element={<ProductsPage />} />
+            <Route path="/category/:slug" element={<CategoryDetailPage />} />
+            <Route path="/products/:slug" element={<CategoryDetailPage />} />
             <Route path="/business-plan" element={<BusinessPlanPage />} />
             <Route path="/franchise" element={<FranchisePage />} />
             <Route path="/contact" element={<ContactPage />} />

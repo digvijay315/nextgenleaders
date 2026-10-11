@@ -1,19 +1,47 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Menu, X, ArrowUpRight, Sparkles } from "lucide-react";
+import {
+  Menu,
+  X,
+  ArrowUpRight,
+  Sparkles,
+  ChevronDown,
+  Layers,
+  ShoppingBag,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { nav, site } from "../data/content.js";
+import { fintasCategories } from "../data/categoriesData.js";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [catDropdownOpen, setCatDropdownOpen] = useState(false);
+  const [mobileCatOpen, setMobileCatOpen] = useState(false);
   const location = useLocation();
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when route changes or click outside
+  useEffect(() => {
+    setCatDropdownOpen(false);
+    setOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setCatDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <motion.header
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="sticky top-0 z-50 border-b border-white/10 bg-navy-950/90 backdrop-blur-md"
+      className="sticky top-0 z-50 border-b border-white/10 bg-navy-950/95 backdrop-blur-md"
     >
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between gap-4">
         {/* Brand Logo & Name */}
@@ -40,13 +68,103 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop Navigation Links - Clean, no scrollbar, no word wrapping */}
+        {/* Desktop Navigation Links */}
         <nav
           className="hidden lg:flex items-center gap-0.5 xl:gap-1.5"
           aria-label="Main"
         >
           {nav.map((n) => {
             const isActive = location.pathname === n.href;
+
+            // Render Products with Categories dropdown
+            if (n.href === "/products") {
+              return (
+                <div
+                  key={n.href}
+                  ref={dropdownRef}
+                  className="relative"
+                  onMouseEnter={() => setCatDropdownOpen(true)}
+                  onMouseLeave={() => setCatDropdownOpen(false)}
+                >
+                  <NavLink
+                    to="/products"
+                    className={`relative inline-flex items-center gap-1 px-2 xl:px-3 py-1.5 text-xs xl:text-sm font-medium whitespace-nowrap rounded-lg transition-colors duration-150 ${
+                      isActive || location.pathname.startsWith("/category/")
+                        ? "text-gold font-semibold"
+                        : "text-white/75 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    <span>{n.label}</span>
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 transition-transform duration-200 ${
+                        catDropdownOpen ? "rotate-180 text-gold" : "opacity-60"
+                      }`}
+                    />
+                    {(isActive || location.pathname.startsWith("/category/")) && (
+                      <motion.div
+                        layoutId="activeNavIndicator"
+                        className="absolute inset-x-2 -bottom-1 h-0.5 rounded-full bg-gold shadow-[0_0_8px_rgba(255,201,40,0.8)]"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </NavLink>
+
+                  {/* Mega Dropdown for Categories */}
+                  <AnimatePresence>
+                    {catDropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                        transition={{ duration: 0.18 }}
+                        className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[600px] rounded-2xl bg-[#0a0f1d] border-2 border-gold/40 p-4 shadow-[0_25px_60px_rgba(0,0,0,0.9)] z-50"
+                      >
+                        {/* Header bar */}
+                        <div className="flex items-center justify-between px-3.5 py-2.5 mb-3 rounded-xl bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900 border border-white/10">
+                          <div className="flex items-center gap-2">
+                            <Layers className="h-4 w-4 text-gold" />
+                            <span className="text-xs font-bold uppercase tracking-wider text-white">
+                              Fintas Product Categories
+                            </span>
+                          </div>
+                          <Link
+                            to="/products"
+                            className="text-[11px] font-bold text-gold hover:text-white transition flex items-center gap-1"
+                          >
+                            <span>All Products</span>
+                            <span>→</span>
+                          </Link>
+                        </div>
+
+                        {/* Category items list with hidden scrollbar */}
+                        <div className="grid grid-cols-2 gap-2 max-h-[360px] overflow-y-auto no-scrollbar">
+                          {fintasCategories.map((c) => (
+                            <Link
+                              key={c.slug}
+                              to={`/category/${c.slug}`}
+                              className="group/item flex items-center justify-between rounded-xl p-2.5 bg-[#131b2e] hover:bg-gold/20 border border-white/10 hover:border-gold/60 transition-all duration-150 text-left"
+                            >
+                              <div className="min-w-0 pr-2">
+                                <span className="block text-xs font-bold text-white group-hover/item:text-gold transition truncate">
+                                  {c.name}
+                                </span>
+                                <span className="block text-[10px] text-white/50 truncate mt-0.5">
+                                  {c.code} • {c.count} items
+                                </span>
+                              </div>
+                              <span className="shrink-0 text-[10px] font-extrabold rounded-full bg-gold/20 text-gold group-hover/item:bg-gold group-hover/item:text-navy-950 px-2 py-0.5 transition">
+                                {c.count}
+                              </span>
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            }
+
             return (
               <NavLink
                 key={n.href}
@@ -101,12 +219,73 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="border-t border-white/10 bg-navy-950/98 px-4 py-4 lg:hidden overflow-hidden"
+            className="border-t border-white/10 bg-navy-950/98 px-4 py-4 lg:hidden max-h-[85vh] overflow-y-auto"
             aria-label="Mobile"
           >
             <div className="flex flex-col space-y-1">
               {nav.map((n) => {
                 const isActive = location.pathname === n.href;
+
+                if (n.href === "/products") {
+                  return (
+                    <div key={n.href} className="flex flex-col">
+                      <div className="flex items-center justify-between rounded-xl px-4 py-2.5 text-sm font-medium">
+                        <NavLink
+                          to="/products"
+                          onClick={() => setOpen(false)}
+                          className={`flex-1 ${
+                            isActive || location.pathname.startsWith("/category/")
+                              ? "text-gold font-bold"
+                              : "text-white/85"
+                          }`}
+                        >
+                          {n.label}
+                        </NavLink>
+                        <button
+                          onClick={() => setMobileCatOpen(!mobileCatOpen)}
+                          className="p-1 text-white/60 hover:text-gold"
+                        >
+                          <ChevronDown
+                            className={`h-4 w-4 transition-transform ${
+                              mobileCatOpen ? "rotate-180 text-gold" : ""
+                            }`}
+                          />
+                        </button>
+                      </div>
+
+                      {/* Accordion Categories for Mobile */}
+                      {mobileCatOpen && (
+                        <div className="ml-4 pl-3 border-l border-white/15 my-1 flex flex-col space-y-1">
+                          <NavLink
+                            to="/products"
+                            onClick={() => setOpen(false)}
+                            className="px-3 py-1.5 text-xs font-semibold text-gold"
+                          >
+                            • All Products
+                          </NavLink>
+                          {fintasCategories.map((c) => (
+                            <NavLink
+                              key={c.slug}
+                              to={`/category/${c.slug}`}
+                              onClick={() => setOpen(false)}
+                              className={`flex items-center justify-between px-3 py-1.5 text-xs rounded-lg transition ${
+                                location.pathname === `/category/${c.slug}`
+                                  ? "bg-gold/20 text-gold font-bold"
+                                  : "text-white/70 hover:text-white"
+                              }`}
+                            >
+                              <span>{c.name}</span>
+                              <span className="text-[10px] text-white/40">
+                                {c.count}
+                              </span>
+                            </NavLink>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+
                 return (
                   <NavLink
                     key={n.href}
