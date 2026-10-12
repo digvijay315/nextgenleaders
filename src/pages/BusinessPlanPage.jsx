@@ -216,19 +216,56 @@ export default function BusinessPlanPage() {
             </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-            {milestoneRewards.map((m) => (
+          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+            {milestoneRewards.map((m, idx) => (
               <div
-                key={m.match}
-                className="flex flex-col justify-between rounded-2xl bg-white p-5 border border-navy-900/10 shadow-sm hover:border-gold hover:shadow-md transition text-center"
+                key={m.match || idx}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-white border border-navy-900/10 shadow-sm hover:border-gold hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               >
-                <div>
-                  <span className="inline-block rounded-full bg-sky-soft px-2.5 py-0.5 text-[11px] font-bold text-royal mb-2">
-                    {m.match}
-                  </span>
-                  <h4 className="text-base font-bold text-navy-900">{m.reward}</h4>
+                {/* Image Container with matching badge */}
+                <div className="relative h-44 w-full overflow-hidden bg-slate-100">
+                  <img
+                    src={m.image}
+                    alt={m.reward}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500&auto=format&fit=crop&q=80";
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+
+                  {/* Matching Ratio Badge */}
+                  <div className="absolute top-3 left-3">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-navy-950/85 backdrop-blur-md px-2.5 py-1 text-[11px] font-bold text-gold border border-gold/30 shadow-sm">
+                      <Sparkles className="w-3 h-3 text-gold" />
+                      {m.match}
+                    </span>
+                  </div>
+
+                  {/* Category Badge */}
+                  <div className="absolute bottom-2.5 left-3">
+                    <span className="rounded-md bg-white/90 backdrop-blur-md px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-navy-900 shadow-sm">
+                      {m.category}
+                    </span>
+                  </div>
                 </div>
-                <p className="mt-3 text-xs text-ink/50 border-t border-navy-900/5 pt-2">{m.category}</p>
+
+                {/* Card Info */}
+                <div className="p-4 text-center flex-1 flex flex-col justify-between">
+                  <div>
+                    <h4 className="text-base font-bold text-navy-900 group-hover:text-royal transition-colors">
+                      {m.reward}
+                    </h4>
+                    <p className="mt-1 text-xs text-ink/60">Fully Paid Reward</p>
+                  </div>
+
+                  <div className="mt-3 pt-3 border-t border-navy-900/5 flex items-center justify-center gap-1 text-[11px] font-medium text-emerald-600">
+                    <Gift className="w-3.5 h-3.5" />
+                    <span>Guaranteed Milestone</span>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

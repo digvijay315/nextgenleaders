@@ -8,7 +8,7 @@ export const site = {
   email: "nextgenleaders108@gmail.com",
   phone: "+91 6261031020",
   address: "Rajnandgaon, Chhattisgarh, India",
-  whatsapp: "6261031020",
+  whatsapp: "916261031020",
   website: "www.nextgenleaders.org",
   supportHours: "10:00 AM to 6:00 PM (Monday - Friday)",
 };
@@ -383,21 +383,96 @@ export const incomeTypes = [
 
 // Rewards & Milestones
 export const milestoneRewards = [
-  { match: "5 : 5", reward: "Neck Band", category: "Electronics" },
-  { match: "25 : 25", reward: "Ear Buds", category: "Electronics" },
-  { match: "50 : 50", reward: "Smart Watch", category: "Wearable" },
-  { match: "100 : 100", reward: "Tablet", category: "Gadgets" },
-  { match: "250 : 250", reward: "Laptop", category: "Gadgets" },
-  { match: "500 : 500", reward: "Activa 6G Scooter", category: "Two Wheeler" },
-  { match: "1000 : 1000", reward: "Royal Enfield Bullet", category: "Two Wheeler" },
-  { match: "2000 : 2000", reward: "Alto K10 Car", category: "Four Wheeler" },
-  { match: "5000 : 5000", reward: "Renault Kwid Car", category: "Four Wheeler" },
-  { match: "10,000 : 10,000", reward: "Maruti Swift Car", category: "Four Wheeler" },
-  { match: "25,000 : 25,000", reward: "Mahindra Scorpio", category: "Luxury SUV" },
-  { match: "50,000 : 50,000", reward: "Toyota Fortuner", category: "Luxury SUV" },
-  { match: "1 Lakh : 1 Lakh", reward: "2 BHK Luxury Flat", category: "Real Estate" },
-  { match: "2 Lakh : 2 Lakh", reward: "4 BHK Luxury Flat", category: "Real Estate" },
-  { match: "5 Lakh : 5 Lakh", reward: "Independent Bungalow", category: "Real Estate" },
+  {
+    match: "5 : 5",
+    reward: "Neck Band",
+    category: "Electronics",
+    image: "/images/rewards/neckband.jpg",
+  },
+  {
+    match: "25 : 25",
+    reward: "Ear Buds",
+    category: "Electronics",
+    image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=80",
+  },
+  {
+    match: "50 : 50",
+    reward: "Smart Watch",
+    category: "Wearable",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=80",
+  },
+  {
+    match: "100 : 100",
+    reward: "Tablet",
+    category: "Gadgets",
+    image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&auto=format&fit=crop&q=80",
+  },
+  {
+    match: "250 : 250",
+    reward: "Laptop",
+    category: "Gadgets",
+    image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&auto=format&fit=crop&q=80",
+  },
+  {
+    match: "500 : 500",
+    reward: "Activa 6G Scooter",
+    category: "Two Wheeler",
+    image: "https://imgd.aeplcdn.com/1280x720/n/cw/ec/44686/activa-6g-right-side-view-8.jpeg?isig=0",
+  },
+  {
+    match: "1000 : 1000",
+    reward: "Royal Enfield Bullet",
+    category: "Two Wheeler",
+    image: "https://www.royalenfield.com/content/dam/royal-enfield-revamp/header/shop/configure/meteor-350-new.webp",
+  },
+  {
+    match: "2000 : 2000",
+    reward: "Alto K10 Car",
+    category: "Four Wheeler",
+    image: "https://stimg.cardekho.com/images/carexteriorimages/630x420/Maruti/Alto-K10/10331/1775800207841/front-left-side-47.jpg",
+  },
+  {
+    match: "5000 : 5000",
+    reward: "Renault Kwid Car",
+    category: "Four Wheeler",
+    image: "https://motoringworld.in/wp-content/uploads/2025/09/Renault-Kwid-10-anni-scaled.jpg",
+  },
+  {
+    match: "10,000 : 10,000",
+    reward: "Maruti Swift Car",
+    category: "Four Wheeler",
+    image: "https://www.motorbeam.com/wp-content/uploads/Maruti-Swift-Specifications.jpg",
+  },
+  {
+    match: "25,000 : 25,000",
+    reward: "Mahindra Scorpio",
+    category: "Luxury SUV",
+    image: "/images/rewards/scorpio.jpg",
+  },
+  {
+    match: "50,000 : 50,000",
+    reward: "Toyota Fortuner",
+    category: "Luxury SUV",
+    image: "https://stimg.cardekho.com/images/carexteriorimages/930x620/Toyota/Fortuner/10904/1755075007369/front-view-118.jpg",
+  },
+  {
+    match: "1 Lakh : 1 Lakh",
+    reward: "2 BHK Luxury Flat",
+    category: "Real Estate",
+    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500&auto=format&fit=crop&q=80",
+  },
+  {
+    match: "2 Lakh : 2 Lakh",
+    reward: "4 BHK Luxury Flat",
+    category: "Real Estate",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&auto=format&fit=crop&q=80",
+  },
+  {
+    match: "5 Lakh : 5 Lakh",
+    reward: "Independent Bungalow",
+    category: "Real Estate",
+    image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=500&auto=format&fit=crop&q=80",
+  },
 ];
 
 // Franchise Network Model
